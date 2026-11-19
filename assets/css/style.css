@@ -1,0 +1,862 @@
+/*
+ * Bookids (bookidsnco.com)
+ * 아임웹에서 운영하던 페이지를 같은 모양으로 옮긴 스타일입니다.
+ * 수치(여백, 폭, 높이)는 원본 페이지를 실제로 렌더링해서 측정한 값입니다.
+ *
+ * 화면 구간
+ *   992px 이상   : PC 화면(.pc)
+ *   991px 이하   : 모바일 화면(.mo)
+ *   767~1024px   : 원본과 같이 전체를 0.85배로 축소(zoom)
+ *   1312px 이하  : PC의 넓은 섹션 좌우 여백을 16px로 줄임
+ */
+
+/* 레시피코리아(레코체): 제목용 한글 글꼴. 개인·상업적 웹 사용 가능, 글꼴 파일 자체의 판매는 불가 */
+@font-face {
+	font-family: 'reko';
+	font-style: normal;
+	font-weight: normal;
+	font-display: swap;
+	src: url(../fonts/reko/reko-subset.woff2) format('woff2');
+}
+
+/* Montserrat: 제목 안의 영문/숫자/문장부호 (SIL Open Font License) */
+@font-face {
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url(../fonts/montserrat/montserrat-regular.woff2) format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+@font-face {
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url(../fonts/montserrat/montserrat-bold.woff2) format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+:root {
+	--brand: #7e1e00;
+	--cream: #fff8e7;
+	--font-body: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Nanum Gothic', 'Noto Sans', sans-serif;
+	--font-title: 'Montserrat', 'reko', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Nanum Gothic', 'Noto Sans', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+	text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	font-family: var(--font-body);
+	font-size: 16px;
+	line-height: 1.8;
+	color: var(--brand);
+	background: #fff;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+img {
+	border: 0;
+	vertical-align: middle;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+::selection {
+	background: var(--brand);
+	color: #fff;
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* 원본(아임웹 기본 테마)과 같은 태블릿 축소 */
+@media (min-width: 767px) and (max-width: 1024px) {
+	body {
+		zoom: 0.85;
+	}
+}
+
+@media (max-width: 992px) {
+	html {
+		overflow-x: hidden;
+		overflow-x: clip;
+	}
+}
+
+/* PC/모바일 화면 전환 */
+@media (max-width: 991px) {
+	.pc {
+		display: none;
+	}
+}
+@media (min-width: 992px) {
+	.mo {
+		display: none;
+	}
+}
+
+.sec {
+	position: relative;
+}
+
+.sec__bg {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: cover;
+}
+
+/* 원본은 줄(row)마다 여백이 따로 쌓이므로, 위아래 margin이 겹치지 않도록 flex로 쌓음 */
+.col {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+}
+
+.pic img {
+	display: block;
+	margin: 0 auto;
+}
+
+/* ---------- 글 블록 (원본 텍스트 위젯과 같은 구조) ---------- */
+
+.t {
+	display: flex;
+	word-break: break-all;
+}
+
+.t > .a {
+	width: 100%;
+}
+
+.t h1,
+.t h2,
+.t h6 {
+	font-family: var(--font-title);
+	font-weight: normal;
+	font-style: normal;
+	color: inherit;
+}
+
+.t h1 {
+	font-size: 4em;
+	line-height: 1.2;
+	margin: 20px 0 10px;
+}
+
+.t h2 {
+	font-size: 3.214em;
+	line-height: 1.2;
+	margin: 20px 0 10px;
+}
+
+.t h6 {
+	font-size: 1.286em;
+	line-height: 1.4;
+	margin: 10px 0;
+}
+
+.mo .t h6 {
+	font-size: 1em;
+}
+
+.t p {
+	margin: 0;
+}
+
+.t strong {
+	font-weight: 700;
+}
+
+/* 원본에서 인라인 스타일로 지정하던 값이라 위의 h1/h2/h6 규칙보다 우선해야 함 */
+.t .ac { text-align: center; }
+.t .al { text-align: left; }
+.t .lh1 { line-height: 1; }
+.t .lh115 { line-height: 1.15; }
+.t .lh15 { line-height: 1.5; }
+.t .lh2 { line-height: 2; }
+
+/* 글자 크기: 18~48px는 줄 간격 1.2, 60px는 1.1 (원본 테마 규칙), 그 외는 부모 줄 간격을 따름 */
+.t .f13 { font-size: 13px; }
+.t .f16 { font-size: 16px; }
+.t .f18 { font-size: 18px; line-height: 1.2; }
+.t .f20 { font-size: 20px; line-height: 1.2; }
+.t .f30 { font-size: 30px; line-height: 1.2; }
+.t .f36 { font-size: 36px; line-height: 1.2; }
+.t .f40 { font-size: 40px; }
+.t .f48 { font-size: 48px; line-height: 1.2; }
+.t .f60 { font-size: 60px; line-height: 1.1; }
+
+.t .c-black { color: #000; }
+.t .c-yellow { color: #f3ac00; }
+
+/* ---------- 스크롤 등장 효과 ---------- */
+/* [data-anim] 위치를 기준으로 판단하고, 안쪽 .a 에 애니메이션을 겁니다. */
+
+.js [data-anim] > .a {
+	visibility: hidden;
+}
+
+.js [data-anim].is-in > .a {
+	visibility: visible;
+	animation-fill-mode: both;
+}
+
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translate3d(0, 60%, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@keyframes jackInTheBox {
+	from {
+		opacity: 0;
+		transform: scale(0.1) rotate(30deg);
+		transform-origin: center bottom;
+	}
+	50% {
+		transform: rotate(-10deg);
+	}
+	70% {
+		transform: rotate(3deg);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes rotateIn {
+	from {
+		transform-origin: center;
+		transform: rotate3d(0, 0, 1, -200deg);
+		opacity: 0;
+	}
+	to {
+		transform-origin: center;
+		transform: translate3d(0, 0, 0);
+		opacity: 1;
+	}
+}
+
+/* ---------- 앱 다운로드 버튼 ---------- */
+
+.app-btn {
+	position: relative;
+	display: block;
+}
+
+.app-btn img {
+	display: block;
+	width: auto;
+	height: 80px;
+}
+
+/* 마우스를 올리면 어두운 버튼 이미지로 바뀜 */
+.app-btn__hover {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: url(../images/btn-app-download-hover.png) 50% 50% / cover no-repeat;
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
+.app-btn:hover .app-btn__hover {
+	opacity: 1;
+}
+
+/* ==========================================================================
+   PC 화면
+   ========================================================================== */
+
+/* ---------- 첫 화면 ---------- */
+
+.pc-hero .sec__bg {
+	background-image: url(../images/hero-bg.png);
+}
+
+/* 눈 내리는 효과 (assets/js/main.js 에서 canvas를 그림) */
+.snow {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	overflow: hidden;
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.snow canvas {
+	display: block;
+}
+
+.pc-hero .col {
+	padding: 137px 200px 45px;
+}
+
+.pc-hero__t1 { margin-bottom: -8px; }
+.pc-hero__t2 { margin: -12px 0 -20px; }
+.pc-hero__t3 { margin: -4px 0 20px; }
+
+.pc-hero__btn {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	height: 150px;
+	margin-top: 100px;
+}
+
+/* ---------- 01 동화와 함께 놀아요 ---------- */
+/* 제목은 아래 카드 세 개가 지나가는 동안 화면 위쪽에 고정됩니다. */
+
+.pc-play__head {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	z-index: 2;
+}
+
+.pc-play__head .col {
+	max-width: 1282px;
+	margin: 0 auto;
+	padding: 67px 16px 0;
+}
+
+.pc-play__t1 { margin-bottom: -8px; padding-left: 72px; }
+.pc-play__t2 { margin: -8px 0 16px; padding-left: 72px; }
+
+.pc-card {
+	display: flex;
+	justify-content: flex-end;
+	max-width: 1312px;
+	margin: 0 auto;
+}
+
+.pc-card__aside {
+	flex: none;
+	width: 560px;
+	padding-right: 16px;
+}
+
+.pc-card__img img {
+	width: auto;
+	height: 340px;
+	border-radius: 20px;
+}
+
+.pc-card__title { margin: 20px 0 8px; padding-left: 20px; }
+.pc-card__desc { margin-bottom: 40px; padding-left: 20px; }
+
+/* 원본에 있던 여백 전용 섹션 (높이는 측정값) */
+.pc-gap-82 { height: 82px; }
+.pc-gap-5 { height: 5px; }
+.pc-gap-11 { height: 11px; background: var(--cream); }
+
+/* ---------- 02 동화 소개 ---------- */
+
+.pc-books .sec__bg {
+	background-image: url(../images/books-bg.png);
+}
+
+.pc-books .col {
+	max-width: 1232px;
+	margin: 0 auto;
+	padding: 120px 16px 217px;
+}
+
+.pc-books__title { margin-bottom: -8px; }
+.pc-books__desc { margin-top: 24px; }
+.pc-books__img { margin-top: 30px; }
+
+.pc-books__img img {
+	width: auto;
+	height: 376px;
+}
+
+/*
+ * 원본 이미지 위젯 규칙: 칸 폭(pw)이 1156px 이하가 되면 이미지를 칸 폭에 맞추고
+ * 위아래 여백을 (376 - pw × 0.33) / 2 로 줍니다. (0.33 = 428 / 1278 반올림)
+ * pw = 화면 폭 - 32 이고, 1024px 이하는 0.85배 축소 때문에 구간이 두 개로 나뉩니다.
+ */
+@media (min-width: 992px) and (max-width: 1010px), (min-width: 1025px) and (max-width: 1188px) {
+	.pc-books__img img {
+		width: 100%;
+		height: auto;
+		margin: calc((376px - 33%) / 2) auto;
+	}
+}
+
+/* ---------- 03 특별해요 ---------- */
+/* 왼쪽 제목은 오른쪽 이미지가 지나가는 동안 고정됩니다. */
+
+.pc-special {
+	display: flex;
+	padding: 0 40px;
+	background: var(--cream);
+}
+
+.pc-special__aside {
+	flex: none;
+	width: 400px;
+	margin-right: 48px;
+}
+
+.pc-special__sticky {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 5px;
+	padding-bottom: 248px;
+}
+
+.pc-special__t > .a {
+	padding: 34px 0;
+}
+
+.pc-special__main {
+	flex: 1 1 auto;
+	min-width: 0;
+	border-left: 1px solid rgba(89, 22, 1, 0.5);
+}
+
+.pc-special__main img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.pc-special__main .overlay:first-child img {
+	height: 460px;
+	object-fit: cover;
+}
+
+/* ---------- 우리가 만들었어요 ---------- */
+
+.pc-team {
+	padding: 0 80px;
+	background: #fff;
+}
+
+/*
+ * 팀 카드 (모바일 화면도 같이 씀)
+ * 원래 한 장(1920×1080)이던 그림을 카드마다 배경 · 캐릭터 이미지로 나눴습니다.
+ * 같은 비율의 틀 안에 예전 그림에서의 픽셀 위치를 비율로 바꿔 놓으므로, 화면 폭이 바뀌어도 예전 한 장짜리와 똑같이 보입니다.
+ * 카드 글자는 카드 크기와 같은 좌표계의 SVG 라서 함께 커지고 작아집니다. (아래 "이미지 위 글자" 참고)
+ */
+.team {
+	position: relative;
+}
+
+/* 틀 높이 = 폭 × 1080 / 1920. aspect-ratio 를 모르는 예전 iOS Safari(14 이하)에서도 같도록 padding 으로 만듦 */
+.team::before {
+	content: "";
+	display: block;
+	padding-top: calc(100% * 1080 / 1920);
+}
+
+.team-card {
+	position: absolute;
+}
+
+.team-card img {
+	position: absolute;
+	display: block;
+}
+
+.team-card__background {
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.team-card__character {
+	height: auto;
+}
+
+/* 카드는 틀(1920×1080) 안의 픽셀 위치, 캐릭터는 카드 안의 픽셀 위치 */
+.team-card--ddobi {
+	left: calc(100% * 50 / 1920);
+	top: calc(100% * 368 / 1080);
+	width: calc(100% * 560 / 1920);
+	height: calc(100% * 268 / 1080);
+}
+
+.team-card--ddobi .team-card__character {
+	left: calc(100% * 34 / 560);
+	top: calc(100% * 27 / 268);
+	width: calc(100% * 185 / 560);
+}
+
+.team-card--chacha {
+	left: calc(100% * 635 / 1920);
+	top: calc(100% * 368 / 1080);
+	width: calc(100% * 605 / 1920);
+	height: calc(100% * 268 / 1080);
+}
+
+.team-card--chacha .team-card__character {
+	left: calc(100% * 26 / 605);
+	top: calc(100% * 47 / 268);
+	width: calc(100% * 189 / 605);
+}
+
+.team-card--mari {
+	left: calc(100% * 1264 / 1920);
+	top: calc(100% * 365 / 1080);
+	width: calc(100% * 606 / 1920);
+	height: calc(100% * 268 / 1080);
+}
+
+.team-card--mari .team-card__character {
+	left: calc(100% * 32 / 606);
+	top: calc(100% * 50 / 268);
+	width: calc(100% * 178 / 606);
+}
+
+.team-card--miho {
+	left: calc(100% * 330 / 1920);
+	top: calc(100% * 675 / 1080);
+	width: calc(100% * 630 / 1920);
+	height: calc(100% * 268 / 1080);
+}
+
+.team-card--miho .team-card__character {
+	left: calc(100% * 36 / 630);
+	top: calc(100% * 45 / 268);
+	width: calc(100% * 192 / 630);
+}
+
+.team-card--kuku {
+	left: calc(100% * 1003 / 1920);
+	top: calc(100% * 673 / 1080);
+	width: calc(100% * 605 / 1920);
+	height: calc(100% * 268 / 1080);
+}
+
+.team-card--kuku .team-card__character {
+	left: calc(100% * 46 / 605);
+	top: calc(100% * 21 / 268);
+	width: calc(100% * 150 / 605);
+}
+
+@media (max-width: 1312px) {
+	.pc-hero .col {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+	.pc-special {
+		padding: 0 16px;
+	}
+	.pc-team {
+		padding: 0 16px;
+	}
+}
+
+/* ==========================================================================
+   모바일 화면
+   ========================================================================== */
+
+.mo .col {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.mo .app-btn img {
+	height: 54px;
+}
+
+/* ---------- 첫 화면 ---------- */
+
+.mo-hero .sec__bg {
+	background-image: url(../images/hero-bg-mobile.png);
+	background-size: auto;
+}
+
+.mo-hero .col {
+	padding-top: 112px;
+	padding-bottom: 88px;
+}
+
+.mo-hero__t1 { margin-bottom: 8px; }
+.mo-hero__t2 { margin-bottom: 8px; }
+
+.mo-hero__btn {
+	display: flex;
+	justify-content: center;
+	margin-top: 105px;
+}
+
+/* ---------- 01 동화와 함께 놀아요 ---------- */
+
+.mo-play .col {
+	padding-top: 74px;
+	padding-bottom: 30px;
+}
+
+.mo-play__title { margin-bottom: 12px; }
+
+.mo-play__img {
+	margin-top: 30px;
+}
+
+.mo-play__img img {
+	width: auto;
+	max-width: 100%;
+}
+
+/* ---------- 02 동화 소개 ---------- */
+
+.mo-books .sec__bg {
+	background-image: url(../images/books-bg-mobile.png);
+}
+
+.mo-books .col {
+	padding-top: 74px;
+	padding-bottom: 74px;
+}
+
+.mo-books__title { margin-bottom: 12px; }
+.mo-books__desc { margin-bottom: 40px; }
+
+.mo-books__img img,
+.mo-special img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+/* ---------- 03 특별해요 ---------- */
+
+.mo-special {
+	background: var(--cream);
+}
+
+.mo-special .col {
+	padding-top: 74px;
+	padding-bottom: 74px;
+}
+
+.mo-special__title { margin-bottom: 8px; }
+
+/* ---------- 우리가 만들었어요 ---------- */
+
+.mo-team .col {
+	padding-top: 7px;
+	padding-bottom: 8px;
+}
+
+/* ---------- 사업자 정보 ---------- */
+
+.mo-info .col {
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.mo-info__line {
+	margin: 40px 0 34px;
+}
+
+.mo-info__line > .a {
+	height: 1px;
+	border-top: 1px solid rgba(89, 22, 1, 0.5);
+}
+
+.mo-info__logo {
+	margin-bottom: 32px;
+}
+
+.mo-info__logo img {
+	width: auto;
+	height: 35px;
+}
+
+.mo-info__text { margin-bottom: 40px; }
+
+/* ==========================================================================
+   하단(푸터)
+   ========================================================================== */
+
+.footer {
+	padding: 30px 0;
+	font-size: 12px;
+	line-height: 1.8;
+	color: #fff;
+	background: #383838;
+}
+
+.footer__inner {
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 1280px;
+	margin: 0 auto;
+}
+
+.footer__main {
+	width: 75%;
+	padding: 0 16px;
+}
+
+.footer__sns {
+	width: 25%;
+	padding: 0 16px;
+}
+
+.footer__nav {
+	display: flow-root;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.footer__nav li {
+	float: left;
+}
+
+.footer__nav li.is-bold {
+	font-weight: 700;
+}
+
+.footer__nav a {
+	padding: 3px 15px 3px 0;
+	color: #fff;
+}
+
+.footer__nav a,
+.footer__sns a {
+	transition: opacity 0.3s;
+}
+
+.footer__nav a:hover,
+.footer__sns a:hover {
+	opacity: 0.7;
+}
+
+.footer__brand,
+.footer__copy {
+	margin-top: 15px;
+}
+
+.footer__sns a {
+	display: block;
+	width: 21px;
+	height: 28.57px;
+	margin-top: 14px;
+	padding-top: 2px;
+	color: #fff;
+}
+
+.footer__sns svg {
+	display: block;
+	width: 20px;
+	height: 20px;
+	fill: currentColor;
+}
+
+@media (max-width: 991px) {
+	.footer__main,
+	.footer__sns {
+		width: 100%;
+		padding: 0 15px;
+	}
+}
+
+/* ==========================================================================
+   이미지 위 글자
+   이미지에 그려져 있던 글자를 빼고, 이미지 픽셀과 같은 좌표계의 SVG로 올립니다.
+   그래서 이미지 크기가 바뀌어도 글자가 함께 커지고 작아지며, 언어마다 글자만 바꿀 수 있습니다.
+   크기·자간·위치는 원본 이미지의 글자를 재서 맞춘 값입니다. (단위는 이미지 픽셀)
+   ========================================================================== */
+
+.overlay {
+	position: relative;
+}
+
+/* 기능 소개 카드는 이미지 폭에 맞춰 가운데 정렬 (원본에서 이미지에 주던 margin: 0 auto 와 같은 효과) */
+.pic .overlay {
+	width: -moz-fit-content;
+	width: fit-content;
+	margin: 0 auto;
+}
+
+.overlay > svg,
+.app-btn svg,
+.team svg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+	pointer-events: none;
+	font-family: var(--font-body);
+}
+
+.ov-title { font-size: 49.83px; font-weight: 700; letter-spacing: -0.55px; }
+.ov-text { font-size: 38.97px; letter-spacing: -0.2px; text-anchor: middle; }
+.ov-caption { font-size: 40.5px; font-weight: 700; letter-spacing: -1.75px; text-anchor: middle; fill: #4c4a2c; }
+.ov-heading { font-size: 90px; font-weight: 700; text-anchor: middle; }
+.ov-bar { fill: #9bd85e; }
+.ov-name { font-size: 35.75px; font-weight: 700; }
+.ov-bullet { font-size: 25px; letter-spacing: 1px; fill: #545454; }
+.ov-dot { fill: #545454; }
+.ov-feature { font-size: 36px; font-weight: 700; letter-spacing: -0.62px; text-anchor: middle; fill: #fff; }
+.ov-button { font-size: 34.83px; font-weight: 700; letter-spacing: 0.2px; text-anchor: middle; }
+.app-btn__hover .ov-button { fill: #fff; }
+
+/* ==========================================================================
+   영어 페이지
+   ========================================================================== */
+
+/* 한글 제목 글꼴(레코체)은 굵은 모양이라, 영어 제목(Montserrat)도 굵게 맞춤 */
+html[lang="en"] .t h1,
+html[lang="en"] .t h2,
+html[lang="en"] .t h6 {
+	font-weight: 700;
+}
+
+/* 낱말 중간에서 줄이 바뀌지 않게 */
+html[lang="en"] .t {
+	word-break: normal;
+	overflow-wrap: break-word;
+}
+
+/* 영어는 글이 길어서 팀 소개 글을 조금 줄이고 자간을 없앰 */
+html[lang="en"] .ov-bullet { font-size: 19px; letter-spacing: 0; }
+html[lang="en"] .ov-caption { letter-spacing: 0; }

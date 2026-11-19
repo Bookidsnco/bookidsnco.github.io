@@ -1,11 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-	<meta charset="UTF-8">
-	<!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
-	<meta http-equiv="refresh" content="0; url=https://bookidsnco.com">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Bookids</title>
+	<!-- 네이버 서치어드바이저 소유 확인은 루트 주소에서 하므로 이 페이지에도 남겨 둠 -->
+	<meta name="naver-site-verification" content="f33d51a31ad42f6ec0239b4553263804b5e55a8d">
+	<link rel="alternate" hreflang="ko" href="https://www.bookidsnco.com/kr/ko/apps/Bookids/">
+	<link rel="alternate" hreflang="en" href="https://www.bookidsnco.com/kr/en/apps/Bookids/">
+	<link rel="alternate" hreflang="x-default" href="https://www.bookidsnco.com/">
+	<link rel="icon" type="image/png" sizes="196x196" href="assets/images/icons/favicon-196.png">
+	<script>
+	/*
+	 * 언어에 맞는 첫 페이지로 이동합니다.
+	 *   1. 오른쪽 위 버튼으로 직접 고른 언어가 저장돼 있으면 그 언어 (assets/js/site.js 와 같은 저장 이름)
+	 *   2. 없으면 브라우저에 설정된 언어 순서대로 보고, 한국어·영어 중 먼저 나오는 쪽. 둘 다 없으면 영어
+	 * 예전 주소(/?mode=policy 등)의 쿼리를 그대로 넘겨야 약관 팝업이 열립니다.
+	 * 파일로 직접 열면(file://) 폴더 주소가 index.html 을 열어 주지 않으므로 파일 이름까지 붙입니다.
+	 */
+	(function () {
+		var language = null;
+		try { language = localStorage.getItem('bookids-language'); } catch (e) {}
+		if (language !== 'ko' && language !== 'en') {
+			var list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
+			language = 'en';
+			for (var i = 0; i < list.length; i++) {
+				var code = String(list[i]).toLowerCase();
+				if (code.indexOf('ko') === 0) { language = 'ko'; break; }
+				if (code.indexOf('en') === 0) { language = 'en'; break; }
+			}
+		}
+		location.replace('kr/' + language + '/apps/Bookids/' + (location.protocol === 'file:' ? 'index.html' : '') + location.search + location.hash);
+	})();
+	</script>
+	<!-- 스크립트가 꺼진 경우에만 한국어 페이지로. noscript 밖에 두면 브라우저에 따라(Safari 등) 이 이동이 위 스크립트의 이동을 덮어써서
+	     고른 언어와 ?mode= 가 사라질 수 있음 -->
+	<noscript><meta http-equiv="refresh" content="0; url=kr/ko/apps/Bookids/"></noscript>
 </head>
+<body>
+	<a href="kr/ko/apps/Bookids/">부키즈 소개 페이지로 이동</a>
+	<a href="kr/en/apps/Bookids/" lang="en">Go to Bookids</a>
+</body>
 </html>
