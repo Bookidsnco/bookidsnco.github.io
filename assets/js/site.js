@@ -1,6 +1,7 @@
 /*
  * 사이트 공통 기능. 어느 페이지든 이 파일과 assets/css/site.css 만 넣으면 아래 기능이 동작합니다.
  *   - 오른쪽 위 언어 전환 (고른 언어 저장)
+ *   - 바닥글 등의 회사 이름 (data-company-name)
  *   - 이용약관 · 개인정보처리방침 팝업 (?mode=policy, ?mode=privacy)
  *   - 파일로 직접 열었을 때(file://) 폴더 링크 보정
  *   - 마우스 오른쪽 버튼 메뉴와 Ctrl/Command + C 막기 (원본 사이트 설정)
@@ -37,6 +38,17 @@
 			if (link.protocol === 'file:' && /\/$/.test(link.pathname)) link.pathname += 'index.html';
 		});
 	}
+
+	/* ------------------------------------------------------------------
+	 * 회사 이름
+	 * data-company-name 이 붙은 요소(바닥글 등)를 이 값으로 채웁니다. 회사 이름이 바뀌면 여기만 고치면 됩니다.
+	 * 페이지에는 이름을 적지 않고 비워 두므로, 자바스크립트가 꺼져 있으면 그 자리가 비어 보입니다.
+	 * ------------------------------------------------------------------ */
+	var COMPANY_NAME = 'Bookidsnco';
+
+	[].forEach.call(document.querySelectorAll('[data-company-name]'), function (element) {
+		element.textContent = COMPANY_NAME;
+	});
 
 	/* ------------------------------------------------------------------
 	 * 이용약관 · 개인정보처리방침 팝업

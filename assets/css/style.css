@@ -682,33 +682,6 @@ a {
 	padding-bottom: 8px;
 }
 
-/* ---------- 사업자 정보 ---------- */
-
-.mo-info .col {
-	padding-top: 8px;
-	padding-bottom: 8px;
-}
-
-.mo-info__line {
-	margin: 40px 0 34px;
-}
-
-.mo-info__line > .a {
-	height: 1px;
-	border-top: 1px solid rgba(89, 22, 1, 0.5);
-}
-
-.mo-info__logo {
-	margin-bottom: 32px;
-}
-
-.mo-info__logo img {
-	width: auto;
-	height: 35px;
-}
-
-.mo-info__text { margin-bottom: 40px; }
-
 /* ==========================================================================
    하단(푸터)
    ========================================================================== */
